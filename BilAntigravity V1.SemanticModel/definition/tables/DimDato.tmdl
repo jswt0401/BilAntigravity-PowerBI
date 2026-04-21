@@ -73,12 +73,12 @@ table DimDato
 
 		annotation SummarizationSetBy = Automatic
 
-	column jswtjswt
+	column tester100
 		dataType: int64
 		formatString: 0
 		lineageTag: 23d9ea77-ad1a-4045-abe0-5f5a5ca14fb4
 		summarizeBy: sum
-		sourceColumn: jswtjswt
+		sourceColumn: tester100
 
 		annotation SummarizationSetBy = Automatic
 
@@ -115,9 +115,10 @@ table DimDato
 				  TilfoejUgeNr = Table.AddColumn(TilfoejKvartal, "UgeNr", each Date.WeekOfYear([Dato]), Int64.Type),
 				    #"Tilføjet brugerdefineret" = Table.AddColumn(TilfoejUgeNr, "Brugerdefineret", each [Dag]),
 				    #"Omdøbte kolonner" = Table.RenameColumns(#"Tilføjet brugerdefineret",{{"Brugerdefineret", "tester"}}),
-				    #"Indsat år" = Table.AddColumn(#"Omdøbte kolonner", "jswtjswt", each Date.Year([Dato]), Int64.Type)
+				    #"Indsat år" = Table.AddColumn(#"Omdøbte kolonner", "jswtjswt", each Date.Year([Dato]), Int64.Type),
+				    #"Omdøbte kolonner1" = Table.RenameColumns(#"Indsat år",{{"jswtjswt", "tester100"}})
 				in
-				    #"Indsat år"
+				    #"Omdøbte kolonner1"
 
 	annotation PBI_ResultType = Table
 
