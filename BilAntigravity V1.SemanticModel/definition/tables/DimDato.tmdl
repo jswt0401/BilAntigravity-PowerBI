@@ -65,6 +65,14 @@ table DimDato
 
 		annotation SummarizationSetBy = Automatic
 
+	column tester
+		dataType: string
+		lineageTag: 41792433-a768-4ea6-9fe9-b3e7ea885f47
+		summarizeBy: none
+		sourceColumn: tester
+
+		annotation SummarizationSetBy = Automatic
+
 	hierarchy Aar-Maaned-Dag
 		lineageTag: 0b98f65d-9e1f-4b90-9690-41fbd77e0dbf
 
@@ -95,9 +103,13 @@ table DimDato
 				  TilfoejDag = Table.AddColumn(TilfoejMaaned, "Dag", each Date.Day([Dato]), Int64.Type),
 				  TilfoejMaanedsTekst = Table.AddColumn(TilfoejDag, "MaanedNavn", each Text.Proper(Date.ToText([Dato], "MMMM")), type text),
 				  TilfoejKvartal = Table.AddColumn(TilfoejMaanedsTekst, "Kvartal", each "Q" & Text.From(Number.RoundUp([Maaned]/3)), type text),
-				  TilfoejUgeNr = Table.AddColumn(TilfoejKvartal, "UgeNr", each Date.WeekOfYear([Dato]), Int64.Type)
+				  TilfoejUgeNr = Table.AddColumn(TilfoejKvartal, "UgeNr", each Date.WeekOfYear([Dato]), Int64.Type),
+				    #"Tilføjet brugerdefineret" = Table.AddColumn(TilfoejUgeNr, "Brugerdefineret", each [Dag]),
+				    #"Omdøbte kolonner" = Table.RenameColumns(#"Tilføjet brugerdefineret",{{"Brugerdefineret", "tester"}})
 				in
-				  TilfoejUgeNr
+				  #"Omdøbte kolonner"
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
 
