@@ -17,11 +17,6 @@ table Data
 		summarizeBy: none
 		sourceColumn: Dato
 
-		variation Variation
-			isDefault
-			relationship: 09867e06-83fb-40ed-81e7-7912ef429b6c
-			defaultHierarchy: LocalDateTable_143fb528-eb1c-4c1b-9427-85f65d29fb04.Datohierarki
-
 		annotation SummarizationSetBy = Automatic
 
 		annotation UnderlyingDateTimeDataType = Date
@@ -39,14 +34,6 @@ table Data
 		lineageTag: 2d53a272-dca8-440c-82b4-41bd8f91fc5a
 		summarizeBy: none
 		sourceColumn: Model
-
-		annotation SummarizationSetBy = Automatic
-
-	column Variant
-		dataType: string
-		lineageTag: 20a727fa-09ba-4617-a27e-8424817c0bf1
-		summarizeBy: none
-		sourceColumn: Variant
 
 		annotation SummarizationSetBy = Automatic
 

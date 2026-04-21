@@ -1,5 +1,9 @@
-relationship 09867e06-83fb-40ed-81e7-7912ef429b6c
-	joinOnDateBehavior: datePartOnly
+relationship fk_Data_Dato
 	fromColumn: Data.Dato
-	toColumn: LocalDateTable_143fb528-eb1c-4c1b-9427-85f65d29fb04.Date
+	toColumn: DimDato.Dato
+
+relationship 0be4fad7-7b0f-4afc-9c63-c9bf829f12a4
+	joinOnDateBehavior: datePartOnly
+	fromColumn: DimDato.Dato
+	toColumn: LocalDateTable_8f48fe7b-e4f6-407e-acab-0a683c54ef16.Date
 
