@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "BilAntigravity V1"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "83f0e79e-a0e7-459e-bdc6-18ffb844ee35"
+  }
+}

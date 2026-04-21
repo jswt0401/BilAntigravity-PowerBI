@@ -5,6 +5,10 @@
 *.tmp
 *.log
 
+# Power BI local cache
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
 # System
 .DS_Store
 Thumbs.db

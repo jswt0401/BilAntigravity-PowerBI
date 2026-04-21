@@ -1,0 +1,180 @@
+table Data
+	lineageTag: c6e42a54-d7eb-4794-a03e-227e51eb22c4
+
+	column ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 124eb84b-5d50-42bf-88c7-fdbb13139ca4
+		summarizeBy: count
+		sourceColumn: ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dato
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: aeef5093-e812-4b11-8288-66e3baf0fb27
+		summarizeBy: none
+		sourceColumn: Dato
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Mærke
+		dataType: string
+		lineageTag: cfa8510e-f617-4cfb-af47-52b13348f100
+		summarizeBy: none
+		sourceColumn: Mærke
+
+		annotation SummarizationSetBy = Automatic
+
+	column Model
+		dataType: string
+		lineageTag: 2d53a272-dca8-440c-82b4-41bd8f91fc5a
+		summarizeBy: none
+		sourceColumn: Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column Aargang
+		dataType: int64
+		formatString: 0
+		lineageTag: 0fb1c0d6-2e15-4b0b-84e3-1f7686d9e76c
+		summarizeBy: sum
+		sourceColumn: Aargang
+
+		annotation SummarizationSetBy = Automatic
+
+	column Km
+		dataType: int64
+		formatString: 0
+		lineageTag: d9899e76-e7c5-473b-afa6-d3dee722c345
+		summarizeBy: sum
+		sourceColumn: Km
+
+		annotation SummarizationSetBy = Automatic
+
+	column Farve
+		dataType: string
+		lineageTag: e0b008b9-3b5d-446e-917a-165fe00390e4
+		summarizeBy: none
+		sourceColumn: Farve
+
+		annotation SummarizationSetBy = Automatic
+
+	column Pris
+		dataType: int64
+		formatString: 0
+		lineageTag: ffa29985-1290-4728-9fd6-301ffd5a9ee0
+		summarizeBy: sum
+		sourceColumn: Pris
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: 83c6f241-7558-4ca0-ad9d-29aab4f8314e
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column Saelger
+		dataType: string
+		lineageTag: c878abec-2ce7-45de-a5a9-bcdd85bbfbe1
+		summarizeBy: none
+		sourceColumn: Saelger
+
+		annotation SummarizationSetBy = Automatic
+
+	column KundeID
+		dataType: string
+		lineageTag: cc2e65d5-117d-4de6-b953-2587f6060da0
+		summarizeBy: none
+		sourceColumn: KundeID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Finansiering
+		dataType: string
+		lineageTag: ba82bc70-ff0a-4b46-9a61-7749ee4c5d88
+		summarizeBy: none
+		sourceColumn: Finansiering
+
+		annotation SummarizationSetBy = Automatic
+
+	column Garanti
+		dataType: int64
+		formatString: 0
+		lineageTag: 89b59c58-fb2e-43cc-8227-d49352f223d2
+		summarizeBy: sum
+		sourceColumn: Garanti
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ekstraudstyr
+		dataType: string
+		lineageTag: dd92743b-c850-41c6-9d71-26906ad4e336
+		summarizeBy: none
+		sourceColumn: Ekstraudstyr
+
+		annotation SummarizationSetBy = Automatic
+
+	column Rabat
+		dataType: int64
+		formatString: 0
+		lineageTag: 90bbb910-5b83-446c-b242-3cbfe5d009c4
+		summarizeBy: sum
+		sourceColumn: Rabat
+
+		annotation SummarizationSetBy = Automatic
+
+	column Moms
+		dataType: int64
+		formatString: 0
+		lineageTag: 15a77042-e0f2-443a-86b1-82b8e763b054
+		summarizeBy: sum
+		sourceColumn: Moms
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nettopris
+		dataType: int64
+		formatString: 0
+		lineageTag: 52fa00e6-8741-4a25-8753-45f6ce7c7e8c
+		summarizeBy: sum
+		sourceColumn: Nettopris
+
+		annotation SummarizationSetBy = Automatic
+
+	column Forsikring
+		dataType: string
+		lineageTag: ae62cd74-645c-4292-9cdd-ef6ac3edace0
+		summarizeBy: none
+		sourceColumn: Forsikring
+
+		annotation SummarizationSetBy = Automatic
+
+	column Afdeling
+		dataType: string
+		lineageTag: 65a745da-46b4-4568-9add-117303f95613
+		summarizeBy: none
+		sourceColumn: Afdeling
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Data = m
+		mode: import
+		source =
+				let
+				    Kilde = Csv.Document(File.Contents("C:\Users\jswt\Desktop\Biler\Data.txt"),[Delimiter=";", Columns=20, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				    #"Hævede overskrifter" = Table.PromoteHeaders(Kilde, [PromoteAllScalars=true]),
+				    #"Ændret type" = Table.TransformColumnTypes(#"Hævede overskrifter",{{"ID", Int64.Type}, {"Dato", type date}, {"Mærke", type text}, {"Model", type text}, {"Variant", type text}, {"Aargang", Int64.Type}, {"Km", Int64.Type}, {"Farve", type text}, {"Pris", Int64.Type}, {"Status", type text}, {"Saelger", type text}, {"KundeID", type text}, {"Finansiering", type text}, {"Garanti", Int64.Type}, {"Ekstraudstyr", type text}, {"Rabat", Int64.Type}, {"Moms", Int64.Type}, {"Nettopris", Int64.Type}, {"Forsikring", type text}, {"Afdeling", type text}})
+				in
+				    #"Ændret type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,126 @@
+table DimDato
+	lineageTag: b88b9511-2e85-4550-81e4-d68dc48b4631
+
+	column Dato24
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: e2430d67-5a28-401c-ba2f-ecbfa90d6e7b
+		summarizeBy: none
+		sourceColumn: Dato24
+
+		variation Variation
+			isDefault
+			relationship: 0be4fad7-7b0f-4afc-9c63-c9bf829f12a4
+			defaultHierarchy: LocalDateTable_8f48fe7b-e4f6-407e-acab-0a683c54ef16.Datohierarki
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Aar
+		dataType: int64
+		lineageTag: 3bf1c49a-6e37-41a0-b235-cac2044169d4
+		summarizeBy: sum
+		sourceColumn: Aar
+
+		annotation SummarizationSetBy = Automatic
+
+	column Maaned
+		dataType: int64
+		lineageTag: 3b40b441-83a8-4d78-bf68-adde9e08d45a
+		summarizeBy: sum
+		sourceColumn: Maaned
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dag
+		dataType: int64
+		lineageTag: a9f88f44-9b83-46e1-a5b5-b02e6ec72361
+		summarizeBy: sum
+		sourceColumn: Dag
+
+		annotation SummarizationSetBy = Automatic
+
+	column MaanedNavn
+		dataType: string
+		lineageTag: 9a24cac2-7035-4d5f-8367-63e02b43efc0
+		summarizeBy: none
+		sourceColumn: MaanedNavn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Kvartal
+		dataType: string
+		lineageTag: c6f3b3a6-0abe-4499-9cd4-365a31d22415
+		summarizeBy: none
+		sourceColumn: Kvartal
+
+		annotation SummarizationSetBy = Automatic
+
+	column UgeNr
+		dataType: int64
+		lineageTag: 957d70c8-b8fa-459b-b82b-f4d69fe359db
+		summarizeBy: sum
+		sourceColumn: UgeNr
+
+		annotation SummarizationSetBy = Automatic
+
+	column tester
+		dataType: string
+		lineageTag: 41792433-a768-4ea6-9fe9-b3e7ea885f47
+		summarizeBy: none
+		sourceColumn: tester
+
+		annotation SummarizationSetBy = Automatic
+
+	column tester500
+		dataType: int64
+		formatString: 0
+		lineageTag: 23d9ea77-ad1a-4045-abe0-5f5a5ca14fb4
+		summarizeBy: sum
+		sourceColumn: tester500
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy Aar-Maaned-Dag
+		lineageTag: 0b98f65d-9e1f-4b90-9690-41fbd77e0dbf
+
+		level Aar
+			lineageTag: 64a7f358-58e2-4a30-8c42-988aeb5a8931
+			column: Aar
+
+		level Maaned
+			lineageTag: 55cef8a3-13cd-461f-9d15-a073305f7035
+			column: Maaned
+
+		level Dag
+			lineageTag: f7cb1ab4-9b4f-4374-a2c1-ba7f3fdf4ce3
+			column: Dag
+
+	partition DimDato = m
+		mode: import
+		source =
+				let
+				  Kilde = #date(2020, 1, 1),
+				  SlutDato = #date(2030, 12, 31),
+				  AntalDage = Duration.Days(SlutDato - Kilde),
+				  Datoer = List.Dates(Kilde, AntalDage, #duration(1, 0, 0, 0)),
+				  Tabel = Table.FromList(Datoer, Splitter.SplitByNothing(), {"Dato"}),
+				  TypeByttet = Table.TransformColumnTypes(Tabel, {{"Dato", type date}}),
+				  TilfoejAar = Table.AddColumn(TypeByttet, "Aar", each Date.Year([Dato]), Int64.Type),
+				  TilfoejMaaned = Table.AddColumn(TilfoejAar, "Maaned", each Date.Month([Dato]), Int64.Type),
+				  TilfoejDag = Table.AddColumn(TilfoejMaaned, "Dag", each Date.Day([Dato]), Int64.Type),
+				  TilfoejMaanedsTekst = Table.AddColumn(TilfoejDag, "MaanedNavn", each Text.Proper(Date.ToText([Dato], "MMMM")), type text),
+				  TilfoejKvartal = Table.AddColumn(TilfoejMaanedsTekst, "Kvartal", each "Q" & Text.From(Number.RoundUp([Maaned]/3)), type text),
+				  TilfoejUgeNr = Table.AddColumn(TilfoejKvartal, "UgeNr", each Date.WeekOfYear([Dato]), Int64.Type),
+				    #"Tilføjet brugerdefineret" = Table.AddColumn(TilfoejUgeNr, "Brugerdefineret", each [Dag]),
+				    #"Omdøbte kolonner" = Table.RenameColumns(#"Tilføjet brugerdefineret",{{"Brugerdefineret", "tester"}}),
+				    #"Indsat år" = Table.AddColumn(#"Omdøbte kolonner", "jswtjswt", each Date.Year([Dato]), Int64.Type),
+				    #"Omdøbte kolonner1" = Table.RenameColumns(#"Indsat år",{{"jswtjswt", "tester500"}, {"Dato", "Dato24"}})
+				in
+				    #"Omdøbte kolonner1"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,21 @@
+model Model
+	culture: da-DK
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: da-DK
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Data","DimDato"]
+
+annotation PBI_ProTooling = ["DevMode","MCP-PBIModeling"]
+
+ref table Data
+ref table DateTableTemplate_697d849c-e427-44ce-a6b0-781a8c2c2b24
+ref table DimDato
+ref table LocalDateTable_8f48fe7b-e4f6-407e-acab-0a683c54ef16
+
+ref cultureInfo da-DK
+
