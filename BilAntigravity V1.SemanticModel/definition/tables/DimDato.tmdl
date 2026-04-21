@@ -73,6 +73,15 @@ table DimDato
 
 		annotation SummarizationSetBy = Automatic
 
+	column jswtjswt
+		dataType: int64
+		formatString: 0
+		lineageTag: 23d9ea77-ad1a-4045-abe0-5f5a5ca14fb4
+		summarizeBy: sum
+		sourceColumn: jswtjswt
+
+		annotation SummarizationSetBy = Automatic
+
 	hierarchy Aar-Maaned-Dag
 		lineageTag: 0b98f65d-9e1f-4b90-9690-41fbd77e0dbf
 
@@ -105,9 +114,10 @@ table DimDato
 				  TilfoejKvartal = Table.AddColumn(TilfoejMaanedsTekst, "Kvartal", each "Q" & Text.From(Number.RoundUp([Maaned]/3)), type text),
 				  TilfoejUgeNr = Table.AddColumn(TilfoejKvartal, "UgeNr", each Date.WeekOfYear([Dato]), Int64.Type),
 				    #"Tilføjet brugerdefineret" = Table.AddColumn(TilfoejUgeNr, "Brugerdefineret", each [Dag]),
-				    #"Omdøbte kolonner" = Table.RenameColumns(#"Tilføjet brugerdefineret",{{"Brugerdefineret", "tester"}})
+				    #"Omdøbte kolonner" = Table.RenameColumns(#"Tilføjet brugerdefineret",{{"Brugerdefineret", "tester"}}),
+				    #"Indsat år" = Table.AddColumn(#"Omdøbte kolonner", "jswtjswt", each Date.Year([Dato]), Int64.Type)
 				in
-				  #"Omdøbte kolonner"
+				    #"Indsat år"
 
 	annotation PBI_ResultType = Table
 
