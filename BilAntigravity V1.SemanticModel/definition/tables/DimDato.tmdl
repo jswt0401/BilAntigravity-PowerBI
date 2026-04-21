@@ -1,12 +1,12 @@
 table DimDato
 	lineageTag: b88b9511-2e85-4550-81e4-d68dc48b4631
 
-	column Dato
+	column Dato24
 		dataType: dateTime
 		formatString: Long Date
 		lineageTag: e2430d67-5a28-401c-ba2f-ecbfa90d6e7b
 		summarizeBy: none
-		sourceColumn: Dato
+		sourceColumn: Dato24
 
 		variation Variation
 			isDefault
@@ -73,12 +73,12 @@ table DimDato
 
 		annotation SummarizationSetBy = Automatic
 
-	column tester100
+	column tester500
 		dataType: int64
 		formatString: 0
 		lineageTag: 23d9ea77-ad1a-4045-abe0-5f5a5ca14fb4
 		summarizeBy: sum
-		sourceColumn: tester100
+		sourceColumn: tester500
 
 		annotation SummarizationSetBy = Automatic
 
@@ -116,7 +116,7 @@ table DimDato
 				    #"Tilføjet brugerdefineret" = Table.AddColumn(TilfoejUgeNr, "Brugerdefineret", each [Dag]),
 				    #"Omdøbte kolonner" = Table.RenameColumns(#"Tilføjet brugerdefineret",{{"Brugerdefineret", "tester"}}),
 				    #"Indsat år" = Table.AddColumn(#"Omdøbte kolonner", "jswtjswt", each Date.Year([Dato]), Int64.Type),
-				    #"Omdøbte kolonner1" = Table.RenameColumns(#"Indsat år",{{"jswtjswt", "tester100"}})
+				    #"Omdøbte kolonner1" = Table.RenameColumns(#"Indsat år",{{"jswtjswt", "tester500"}, {"Dato", "Dato24"}})
 				in
 				    #"Omdøbte kolonner1"
 

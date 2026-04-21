@@ -1,9 +1,9 @@
 relationship fk_Data_Dato
 	fromColumn: Data.Dato
-	toColumn: DimDato.Dato
+	toColumn: DimDato.Dato24
 
 relationship 0be4fad7-7b0f-4afc-9c63-c9bf829f12a4
 	joinOnDateBehavior: datePartOnly
-	fromColumn: DimDato.Dato
+	fromColumn: DimDato.Dato24
 	toColumn: LocalDateTable_8f48fe7b-e4f6-407e-acab-0a683c54ef16.Date
 
